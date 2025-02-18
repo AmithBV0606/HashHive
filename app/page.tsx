@@ -1,3 +1,4 @@
+import DeveloperTools from "@/components/DeveloperTools";
 import ThemeProvider from "@/components/theme-provider";
 import { Button } from "@/components/ui/button";
 import {
@@ -115,9 +116,13 @@ export default function Home() {
           </section>
         </main>
 
-        {/* Coming Soon Section : */}
+        {/* Coming Soon Section and Developer Tools : */}
+        <DeveloperTools />
 
-        {/* Developer Tools : */}
+        {/* Footer */}
+        <footer className="mt-16 text-center text-sm text-muted-foreground">
+          <p>&copy; 2025 Hash-Hive. All rights reserved.</p>
+        </footer>
       </div>
     </ThemeProvider>
   );
