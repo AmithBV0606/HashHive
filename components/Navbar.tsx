@@ -1,20 +1,43 @@
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect } from "react";
 import { Button } from "./ui/button";
 import { LogIn, LogOut } from "lucide-react";
 import { usePrivy } from "@privy-io/react-auth";
+import { createOrUpdateUser } from "@/utils/db/actions";
 
 const Navbar = () => {
   const { login, logout, authenticated, user } = usePrivy();
 
+  // console.log(user);
+  console.log(authenticated);
+
   const handleAuth = () => {
-      if (authenticated) {
-        logout();
-      } else {
-        login();
+    if (authenticated) {
+      logout();
+    } else {
+      login();
+    }
+  };
+
+  const handleUserAuthentication = async () => {
+    if (user && user.wallet?.address) {
+      try {
+        await createOrUpdateUser(
+          user.wallet?.address,
+          user.email?.address || ""
+        );
+      } catch (error) {
+        console.error("Error updating the user information : ", error);
       }
-  }
+    }
+  };
+
+  useEffect(() => {
+    if (authenticated && user) {
+      handleUserAuthentication();
+    }
+  }, [authenticated, user]);
 
   return (
     <>
